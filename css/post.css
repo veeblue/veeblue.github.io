@@ -3,7 +3,7 @@ body {
 }
 
 .post {
-  margin: 128px 0;
+  margin: 32px 0;
 }
 
 .meta .categories {
@@ -348,4 +348,8 @@ body[data-color-scheme="dark"] .tags .icon {
 .post-prev-next .text .label {
   margin-bottom: 4px;
   color: var(--grey);
+}
+
+.divider {
+  display: none;
 }
