@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>部署:vLLM + Open WebUI</title>
+      <link href="/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/"/>
+      <url>/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/</url>
+      
+        <content type="html"><![CDATA[<p><strong>创建虚拟环境：</strong><br><code>conda create -n open-webui python==3.11</code><br><strong>安装所有依赖：</strong></p><p><strong><code>conda activate open-webui pip install -U open-webui vllm torch transformers</code></strong></p><p><strong>运行 vllm(使用微调后的模型)：</strong></p><p><strong><code>vllm serve /root/autodl-tmp/code/work_dirs/qwen1_5_1_8b_chat_qlora_alpaca_e3/merged</code></strong></p><p><strong>运行open-webui</strong></p><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HF_ENDPOINT=https://hf-mirror.com</span><br><span class="line"><span class="built_in">export</span> ENABLE_OLLAMA_API=False </span><br><span class="line"><span class="built_in">export</span> OPENAI_API_BASE_URL=http://127.0.0.1:8000/v1</span><br><span class="line"><span class="built_in">export</span> DEFAULT_MODELS=</span><br><span class="line"><span class="string">&quot;/root/autodl-tmp/code/work_dirs/qwen1_5_1_8b_chat_qlora_alpaca_e3/merged&quot;</span></span><br><span class="line">open-webui serve --host 0.0.0.0 --port 8081</span><br></pre></td></tr></table></figure><blockquote><p>若卡住 手动添加端口进行转发 默认端口8080 </p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> note </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vllm </tag>
+            
+            <tag> open_webui </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Xtuner微调</title>
       <link href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/"/>
       <url>/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/</url>
