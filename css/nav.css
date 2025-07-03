@@ -112,6 +112,10 @@ body[data-color-scheme="auto"] nav .nav-item-search, body[data-color-scheme="lig
     background-image: url(/theme-img/search-dark.svg);
 }
 
+body[data-color-scheme="auto"] nav .nav-item-x, body[data-color-scheme="light"] nav .nav-item-x {
+    background-image: url(/theme-img/x-social-media-black.svg);
+}
+
 @media (prefers-color-scheme: dark) {
     body[data-color-scheme="auto"] nav .nav-item-github {
         background-image: url(/theme-img/github-mark-light.png);
@@ -130,6 +134,9 @@ body[data-color-scheme="auto"] nav .nav-item-search, body[data-color-scheme="lig
     }
     body[data-color-scheme="auto"] nav .nav-item-search {
         background-image: url(/theme-img/search-light.svg);
+    }    
+    body[data-color-scheme="auto"] nav .nav-item-x {
+        background-image: url(/theme-img/x-social-media-white.svg);
     }
 }
 
@@ -155,6 +162,10 @@ body[data-color-scheme="dark"] nav .nav-item-discord {
 
 body[data-color-scheme="dark"] nav .nav-item-search {
     background-image: url(/theme-img/search-light.svg);
+}
+
+body[data-color-scheme="dark"] nav .nav-item-x {
+    background-image: url(/theme-img/x-social-media-white.svg);
 }
 
 @media screen and (max-width: 600px) {
