@@ -282,7 +282,7 @@ window.addEventListener('load', () => {
       const stats = languages.hits_stats.replace(/\$\{hits}/, resultItems.length)
 
       container.innerHTML = `<ol class="search-result-list">${resultItems.map(result => result.item).join('')}</ol>`
-      statsItem.innerHTML = `<hr><div class="search-result-stats">${stats}</div>`
+      statsItem.innerHTML = `<p><div class="search-result-stats">${stats}</div>`
       window.pjax && window.pjax.refresh(container)
     }
 
