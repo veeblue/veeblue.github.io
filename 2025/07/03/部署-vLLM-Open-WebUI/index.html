@@ -1,174 +1,239 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>部署:vLLM + Open WebUI | Veeblue</title><meta name="author" content="Veeblue"><meta name="copyright" content="Veeblue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="创建虚拟环境：conda create -n open-webui python&#x3D;&#x3D;3.11安装所有依赖： conda activate open-webui pip install -U open-webui vllm torch transformers 运行 vllm(使用微调后的模型)： vllm serve &#x2F;root&#x2F;autodl-tmp&#x2F;code&#x2F;work_dirs&#x2F;qwen1_5_">
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head prefix="og: https://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  
+  <title>部署:vLLM + Open WebUI - Veeblue</title>
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  <link rel='manifest' href='/manifest.json'>
+  
+
+  <meta name="description" content="创建虚拟环境：conda create -n open-webui python&#x3D;&#x3D;3.11安装所有依赖： conda activate open-webui pip install -U open-webui vllm torch transformers 运行 vllm(使用微调后的模型)： vllm serve &#x2F;root&#x2F;autodl-tmp&#x2F;code&#x2F;work_dirs&#x2F;qwen1_5_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部署:vLLM + Open WebUI">
 <meta property="og:url" content="https://blog.veeblue.com/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/index.html">
 <meta property="og:site_name" content="Veeblue">
 <meta property="og:description" content="创建虚拟环境：conda create -n open-webui python&#x3D;&#x3D;3.11安装所有依赖： conda activate open-webui pip install -U open-webui vllm torch transformers 运行 vllm(使用微调后的模型)： vllm serve &#x2F;root&#x2F;autodl-tmp&#x2F;code&#x2F;work_dirs&#x2F;qwen1_5_">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.veeblue.com/images/vllm.webp">
 <meta property="article:published_time" content="2025-07-03T13:40:58.000Z">
 <meta property="article:modified_time" content="2025-07-04T03:53:06.438Z">
 <meta property="article:author" content="Veeblue">
 <meta property="article:tag" content="vllm">
 <meta property="article:tag" content="open_webui">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.veeblue.com/images/vllm.webp"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "部署:vLLM + Open WebUI",
-  "url": "https://blog.veeblue.com/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/",
-  "image": "https://blog.veeblue.com/images/vllm.webp",
-  "datePublished": "2025-07-03T13:40:58.000Z",
-  "dateModified": "2025-07-04T03:53:06.438Z",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "Veeblue",
-      "url": "https://blog.veeblue.com/"
-    }
-  ]
-}</script><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="https://blog.veeblue.com/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return value
-      }
-    }
 
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
-        }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
-        }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
-        }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
-        }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
-        
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
-      }
-    
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
   
-    })()
-  </script><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
-  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
-  copy: {
-    success: '复制成功',
-    error: '复制失败',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'null',
-  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyloadPlugin: true,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: true,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '部署:vLLM + Open WebUI',
-  isHighlightShrink: false,
-  isToc: false,
-  pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
-  restartOnPushState: false
-}
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v13/font/simple-icons.min.css">
 
-btf.addGlobalFn('pjaxSend', () => {
-  Pace.restart()
-}, 'pace_restart')
+  
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-</script><link rel="stylesheet" href="/css/minimal.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg" style="background-color: #FBFBFD;"></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Veeblue</span></a><a class="nav-page-title" href="/"><span class="site-name">部署:vLLM + Open WebUI</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">部署:vLLM + Open WebUI</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-03T13:40:58.000Z" title="发表于 2025-07-03 21:40:58">2025-07-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-04T03:53:06.438Z" title="更新于 2025-07-04 11:53:06">2025-07-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/note/">note</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">111</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p><strong>创建虚拟环境：</strong><br><code>conda create -n open-webui python==3.11</code><br><strong>安装所有依赖：</strong></p>
+  
+
+  
+<link rel="stylesheet" href="/css/var.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/typography.css">
+
+  
+<link rel="stylesheet" href="/css/code-highlighting.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/components/card.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/button.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/badge.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/utilities.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/carousel.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/nav.css">
+
+  
+<link rel="stylesheet" href="/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/css/footer.css">
+
+  
+<link rel="stylesheet" href="/css/post-list.css">
+
+  
+  
+<link rel="stylesheet" href="/css/rainbow-banner.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/toc.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/post.css">
+
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/scroll-reveal.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/view-transition.css">
+
+  
+  
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  
+<script src="/js/smooth-scroll.js"></script>
+
+  
+
+  
+
+  
+<script src="/js/head.js"></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body
+    data-color-scheme="auto"
+    data-uppercase-categories="true"
+    
+    data-rainbow-banner="true"
+    data-rainbow-banner-shown="auto"
+    data-rainbow-banner-month="6"
+    data-rainbow-banner-colors="#e50000,#ff8d00,#ffee00,#008121,#004cff,#760188"
+    
+    data-config-root="/"
+    
+    data-toc="true"
+    data-toc-max-depth="2"
+    
+    
+    
+    data-scroll-reveal-disappear="false"
+    data-scroll-reveal-query=".scroll-reveal, .post-list-item, .card, .content p img, .content .block-large img"
+    
+    data-nav-blur-gradient="true"
+  >
+    
+<script src="/js/body-top.js"></script>
+
+    <a href="#main-content" id="skip-to-content">跳至主要内容</a>
+    
+
+<div class="nav-mask">
+  <div order="1"></div>
+  <div order="2"></div>
+  <div order="3"></div>
+  <div order="4"></div>
+  <div order="5"></div>
+  <div order="6"></div>
+</div>
+
+<nav id="theme-nav">
+  <div class="inner">
+    <a class="title" href="/">Blog</a>
+    <div class="nav-arrow"></div>
+    <div class="nav-items">
+      <a class="nav-item nav-item-home" href="/" style="--index: 0">主页</a>
+
+      
+      <a class="nav-item" href="/archives" style="--index: 1">Archives</a>
+      
+      <a class="nav-item" href="/tags" style="--index: 2">Tags</a>
+      
+      <a class="nav-item" href="/categories" style="--index: 3">Categories</a>
+      
+      <a class="nav-item" href="/" style="--index: 4">About</a>
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://github.com/veeblue" style="--index: 5"><i class="si si-github"></i></a>
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://x.com/_veeblue" style="--index: 6"><i class="si si-x"></i></a>
+      
+      <a class="nav-item is-icon" href="/search" style="--index: 7"><i class="bi bi-search"></i></a>
+      
+    </div>
+  </div>
+</nav>
+
+    <main id="main-content" data-pagefind-body>
+      
+<article class="post">
+  
+  <div class="cover">
+    <img src="/images/vllm.webp" alt="" class="cover-img" data-pagefind-meta="image[src], image_alt[alt]" />
+  </div>
+  
+  <div class="meta">
+    
+    <div class="categories text-uppercase">
+    
+      <a href="/categories/note/">note</a>
+    
+    </div>
+    
+
+    
+    <time class="date" datetime="2025-07-03T21:40:58+08:00">
+      July 3, 2025
+    </time>
+    
+
+    <h1 class="title" data-pagefind-meta="title">部署:vLLM + Open WebUI</h1>
+  </div>
+
+  <div class="content">
+    <p><strong>创建虚拟环境：</strong><br><code>conda create -n open-webui python==3.11</code><br><strong>安装所有依赖：</strong></p>
 <p><strong><code>conda activate open-webui pip install -U open-webui vllm torch transformers</code></strong></p>
 <p><strong>运行 vllm(使用微调后的模型)：</strong></p>
 <p><strong><code>vllm serve /root/autodl-tmp/code/work_dirs/qwen1_5_1_8b_chat_qlora_alpaca_e3/merged</code></strong></p>
@@ -177,61 +242,134 @@ btf.addGlobalFn('pjaxSend', () => {
 <blockquote>
 <p>若卡住 手动添加端口进行转发 默认端口8080 </p>
 </blockquote>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.veeblue.com">Veeblue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.veeblue.com/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/">https://blog.veeblue.com/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.veeblue.com" target="_blank">Veeblue</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/vllm/">vllm</a><a class="post-meta__tags" href="/tags/open-webui/">open_webui</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/" title="Xtuner微调"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/Blog-Banner.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Xtuner微调</div></div><div class="info-2"><div class="info-item-1">1github: https://github.com/InternLM/xtuner  安装123456conda create --name xtuner-env python=3.10 -yconda activate xtuner-envgit clone https://github.com/InternLM/xtuner.gitcd xtunerpip install -e &#x27;.[all]&#x27;  配置文件目录：xtuner&#x2F;xuner&#x2F;configs&#x2F;[对应的模型]&#x2F;[对应的模型配置].py 配置内容（QLora为例）： 下载对应的模型： 12from modelscope import snapshot_downloadmodel_dir = snapshot_download(&#x27;Qwen/Qwen1.5-1.8B-Chat&#x27;,...</div></div></div></a><a class="pagination-related" href="/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/" title="记：微调一个情绪对话模型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/2025_07_07_cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">记：微调一个情绪对话模型</div></div><div class="info-2"><div class="info-item-1">数据准备1.使用大模型生成不同情绪的对话模版1234567891011121314151617181920212223242526272829303132&#123;       &quot;傲娇&quot;: &#123;        &quot;system_prompt&quot;: &quot;你是一个口是心非、外冷内热的聊天助手。核心特征：\n1. 常用否定词开头（&#x27;哼&#x27;、&#x27;才不是&#x27;、&#x27;谁要&#x27;）但后续暴露关心\n2. 结合嫌弃表情（😒、🙄）和偶尔的害羞表情（😳）\n3. 表面吐槽实则提供帮助&quot;,        &quot;examples&quot;: [            HumanMessage(content=&quot;下雨了，我没带伞...&quot;),            AIMessage(content=&quot;哼！谁让你不看天气预报，笨蛋！😒 ...（停顿）... 咳，地址发我，看看附近便利店有没有卖的。&quot;),           ...</div></div></div></a></nav><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Veeblue</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="/about"><i class="fab fa-github"></i><span>About Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/veeblue" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to my world!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/07/19/%F0%9F%A7%AD-macOS-Claude-Code-%E5%9F%BA%E4%BA%8EKIMI-%E5%85%A8%E6%B5%81%E7%A8%8B%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" title="🧭 macOS Claude Code(使用Kimi Api)全流程安装指南"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="🧭 macOS Claude Code(使用Kimi Api)全流程安装指南"/></a><div class="content"><a class="title" href="/2025/07/19/%F0%9F%A7%AD-macOS-Claude-Code-%E5%9F%BA%E4%BA%8EKIMI-%E5%85%A8%E6%B5%81%E7%A8%8B%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" title="🧭 macOS Claude Code(使用Kimi Api)全流程安装指南">🧭 macOS Claude Code(使用Kimi Api)全流程安装指南</a><time datetime="2025-07-19T02:48:23.000Z" title="发表于 2025-07-19 10:48:23">2025-07-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/" title="记：微调一个情绪对话模型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/2025_07_07_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记：微调一个情绪对话模型"/></a><div class="content"><a class="title" href="/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/" title="记：微调一个情绪对话模型">记：微调一个情绪对话模型</a><time datetime="2025-07-07T05:23:22.000Z" title="发表于 2025-07-07 13:23:22">2025-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/" title="部署:vLLM + Open WebUI"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/vllm.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="部署:vLLM + Open WebUI"/></a><div class="content"><a class="title" href="/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/" title="部署:vLLM + Open WebUI">部署:vLLM + Open WebUI</a><time datetime="2025-07-03T13:40:58.000Z" title="发表于 2025-07-03 21:40:58">2025-07-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/" title="Xtuner微调"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/Blog-Banner.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Xtuner微调"/></a><div class="content"><a class="title" href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/" title="Xtuner微调">Xtuner微调</a><time datetime="2025-07-03T06:57:15.000Z" title="发表于 2025-07-03 14:57:15">2025-07-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/02/2025%E6%90%AD%E5%BB%BA-github-Hexo-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="2025搭建 github + Hexo 个人博客"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/image-20250702_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2025搭建 github + Hexo 个人博客"/></a><div class="content"><a class="title" href="/2025/07/02/2025%E6%90%AD%E5%BB%BA-github-Hexo-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="2025搭建 github + Hexo 个人博客">2025搭建 github + Hexo 个人博客</a><time datetime="2025-07-02T14:35:08.000Z" title="发表于 2025-07-02 22:35:08">2025-07-02</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(60deg, #3d7eff, #0057ff,rgb(0, 76, 255),rgb(42, 106, 255));"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Veeblue</div><div class="framework-info"><span>Powered by  </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme: </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
-  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
-  const option = null
 
-  const commentCount = n => {
-    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
-    if (isCommentCount) {
-      isCommentCount.textContent= n
-    }
-  }
+  </div>
 
-  const initGitalk = (el, path) => {
-    if (isShuoshuo) {
-      window.shuoshuoComment.destroyGitalk = () => {
-        if (el.children.length) {
-          el.innerHTML = ''
-          el.classList.add('no-comment')
-        }
-      }
-    }
+  
+  <div class="about" data-pagefind-ignore>
+    <h1>关于本文</h1>
+    <div class="details">
+      <p>由 Veeblue 撰写，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a> 许可协议。</p>
+    </div>
+    
+    <p class="tags">
+      <i class="bi bi-tags icon"></i>
+      
+      <a href="/tags/vllm/" class="tag">#vllm</a>
+      
+      <a href="/tags/open-webui/" class="tag">#open_webui</a>
+      
+    </p>
+    
+    
+  </div>
+  
 
-    const gitalk = new Gitalk({
-      clientID: '',
-      clientSecret: '',
-      repo: '',
-      owner: '',
-      admin: [''],
-      updateCountCallback: commentCount,
-      ...option,
-      id: isShuoshuo ? path : (option && option.id) || 'b285b7fcc39874412d9c4ca2a3b5313e'
-    })
+  <div class="container post-prev-next" data-pagefind-ignore>
+    
+    <a href="/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/" class="next">
+      <div class="text">
+        <p class="label">下一篇</p>
+        <h3 class="title">记：微调一个情绪对话模型</h3>
+      </div>
+    </a>
+    
+    
+    <a href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/" class="prev">
+      <div class="text">
+        <p class="label">上一篇</p>
+        <h3 class="title">Xtuner微调</h3>
+      </div>
+    </a>
+    
+  </div>
 
-    gitalk.render('gitalk-container')
-  }
+  
+    
+    
+  
+</article>
 
-  const loadGitalk = async(el, path) => {
-    if (typeof Gitalk === 'function') initGitalk(el, path)
-    else {
-      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
-      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
-      initGitalk(el, path)
-    }
-  }
 
-  if (isShuoshuo) {
-    'Gitalk' === 'Gitalk'
-      ? window.shuoshuoComment = { loadComment: loadGitalk }
-      : window.loadOtherComment = loadGitalk
-    return
-  }
+    </main>
+    <footer>
+  <div class="inner">
+    <div class="links">
+      
+      <div class="group">
+        <h2 class="title">Blog</h2>
+        
+        <a href="/" class="item">Home</a>
+        
+        <a href="/archives" class="item">Archives</a>
+        
+        <a href="/tags" class="item">Tags</a>
+        
+        <a href="/categories" class="item">Categories</a>
+        
+        <a href="/search" class="item">Search</a>
+        
+        <a href="/friends" class="item">Friends</a>
+        
+        <a href="/projects" class="item">Projects</a>
+        
+        <a href="/resume" class="item">Resume</a>
+        
+        <a href="/" class="item">About</a>
+        
+        <a href="/atom.xml" class="item">RSS</a>
+        
+      </div>
+      
+      <div class="group">
+        <h2 class="title">Me</h2>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/veeblue" class="item">GitHub</a>
+        
+        <a href="mailto:yee@veeblue.com" class="item">Email</a>
+        
+      </div>
+      
+    </div>
+    <span>&copy; 2025 Veeblue<br>由 <a href="http://hexo.io/" target="_blank">Hexo</a> 驱动</span>
+    
+    
+      <br>
+      <div class="color-scheme-toggle" role="radiogroup" id="theme-color-scheme-toggle">
+        <label>
+          <input type="radio" value="light">
+          <span>浅色</span>
+        </label>
+        <label>
+          <input type="radio" value="dark">
+          <span>深色</span>
+        </label>
+        <label>
+          <input type="radio" value="auto">
+          <span>自动</span>
+        </label>
+      </div>
+    
+  </div>
+</footer>
 
-  if ('Gitalk' === 'Gitalk' || !true) {
-    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
-    else loadGitalk()
-  } else {
-    window.loadOtherComment = loadGitalk
-  }
-})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><p></p><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+
+    
+<script src="/js/main.js"></script>
+
+
+    
+
+    
+    
+<script src="/js/scroll-reveal.js"></script>
+
+    
+
+    
+
+    
+
+    
+  </body>
+</html>
