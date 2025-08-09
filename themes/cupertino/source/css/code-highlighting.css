@@ -1,0 +1,514 @@
+@charset "UTF-8";
+/* This Code Highlighting Theme is based on Dracula Theme with macOS-style UI */
+/* macOS-style code block wrapper */
+.code-block-wrapper {
+  position: relative;
+  margin: 1.5em 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e4e8;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* macOS traffic lights */
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e4e8;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 8px;
+}
+
+.traffic-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+
+.traffic-light.close {
+  background-color: #ff5f56;
+}
+
+.traffic-light.minimize {
+  background-color: #ffbd2e;
+}
+
+.traffic-light.maximize {
+  background-color: #27c93f;
+}
+
+.code-language {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  transform: scale(1.05);
+}
+
+.copy-button:active {
+  transform: scale(0.95);
+}
+
+.copy-button.copied {
+  color: #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.copy-button svg {
+  transition: all 0.2s;
+}
+
+/* Inline code styling for markdown `code` format */
+code:not(.highlight):not(.hljs) {
+  background-color: #e1e4e8 !important;
+  color: #ff6b35 !important;
+  font-weight: 600 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace !important;
+  font-size: 0.9em !important;
+  border: 1px solid #d1d5db !important;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+}
+
+code:not(.highlight):not(.hljs):hover {
+  background-color: #d1d5db !important;
+  border-color: #9ca3af !important;
+}
+
+/* Dark mode inline code */
+@media (prefers-color-scheme: dark) {
+  body[data-color-scheme=auto] code:not(.highlight):not(.hljs) {
+    background-color: #44475a !important;
+    color: #ff8c42 !important;
+    border-color: #6272a4 !important;
+  }
+  body[data-color-scheme=auto] code:not(.highlight):not(.hljs):hover {
+    background-color: #6272a4 !important;
+    border-color: #bd93f9 !important;
+  }
+}
+body[data-color-scheme=dark] code:not(.highlight):not(.hljs) {
+  background-color: #44475a !important;
+  color: #ff8c42 !important;
+  border-color: #6272a4 !important;
+}
+
+body[data-color-scheme=dark] code:not(.highlight):not(.hljs):hover {
+  background-color: #6272a4 !important;
+  border-color: #bd93f9 !important;
+}
+
+/* Enhanced code block styling */
+.highlight {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  color: #24292e !important;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.highlight pre {
+  background-color: transparent !important;
+  padding: 16px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  color: #24292e !important;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode specific styles */
+body[data-color-scheme=light] .code-block-wrapper,
+body[data-color-scheme=auto] .code-block-wrapper {
+  --code-bg: #f8f9fa;
+  --code-text: #24292e;
+  --code-border: #e1e4e8;
+  --code-header-bg: #ffffff;
+  background-color: #f8f9fa !important;
+}
+
+/* Dark mode specific styles */
+@media (prefers-color-scheme: dark) {
+  body[data-color-scheme=auto] .code-block-wrapper {
+    background-color: #282a36 !important;
+    border-color: #44475a !important;
+  }
+  body[data-color-scheme=auto] .code-block-header {
+    background-color: #1a1a1a !important;
+    border-bottom-color: #44475a !important;
+  }
+  body[data-color-scheme=auto] .highlight,
+  body[data-color-scheme=auto] .highlight pre {
+    color: #f8f8f2 !important;
+  }
+}
+body[data-color-scheme=dark] .code-block-wrapper {
+  background-color: #282a36 !important;
+  border-color: #44475a !important;
+}
+
+body[data-color-scheme=dark] .code-block-header {
+  background-color: #1a1a1a !important;
+  border-bottom-color: #44475a !important;
+}
+
+body[data-color-scheme=dark] .highlight,
+body[data-color-scheme=dark] .highlight pre {
+  color: #f8f8f2 !important;
+}
+
+/* Ensure all inner elements use transparent background */
+.code-block-wrapper .highlight,
+.code-block-wrapper .highlight pre,
+.code-block-wrapper pre,
+.code-block-wrapper figure,
+.code-block-wrapper figure.highlight,
+.code-block-wrapper table,
+.code-block-wrapper tbody,
+.code-block-wrapper tr,
+.code-block-wrapper td {
+  background-color: transparent !important;
+}
+
+/* Handle figure.highlight elements specifically */
+figure.highlight {
+  background-color: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+figure.highlight table {
+  background-color: transparent !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+}
+
+figure.highlight tbody {
+  background-color: transparent !important;
+}
+
+figure.highlight tr {
+  background-color: transparent !important;
+}
+
+figure.highlight td {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  vertical-align: top !important;
+}
+
+figure.highlight .gutter {
+  background-color: transparent !important;
+  border-right: none !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  text-align: right !important;
+}
+
+figure.highlight .code {
+  background-color: transparent !important;
+  padding-left: 0 !important;
+}
+
+figure.highlight .gutter,
+figure.highlight .code {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Mobile devices - ensure line numbers and code align */
+@media (max-width: 768px) {
+  /* Add margin to code block wrapper for screen edge spacing */
+  .code-block-wrapper {
+    margin-left: 6px !important;
+    margin-right: 6px !important;
+  }
+  figure.highlight .gutter,
+  figure.highlight .code {
+    line-height: 1.5 !important;
+    font-size: 14px !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    -moz-hyphens: none !important;
+    -ms-hyphens: none !important;
+    tab-size: 4 !important;
+    -moz-tab-size: 4 !important;
+    -o-tab-size: 4 !important;
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    text-indent: 0 !important;
+    vertical-align: baseline !important;
+    box-sizing: border-box !important;
+  }
+  figure.highlight .gutter {
+    padding-right: 4px !important;
+    padding-left: 0 !important;
+    min-width: 2.5em !important;
+    width: 2.5em !important;
+    text-align: right !important;
+    border-right: none !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+  figure.highlight .code {
+    padding-left: 6px !important;
+    padding-right: 0 !important;
+    white-space: pre !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex: 1 !important;
+  }
+  /* Ensure table row maintains proper structure */
+  figure.highlight tr {
+    display: flex !important;
+    width: 100% !important;
+  }
+  figure.highlight td {
+    display: block !important;
+    float: none !important;
+    vertical-align: top !important;
+  }
+  /* iOS Safari specific additional fixes */
+  @supports (-webkit-touch-callout: none) {
+    figure.highlight .gutter,
+    figure.highlight .code {
+      line-height: 1.4 !important;
+      font-size: 13px !important;
+      -webkit-text-size-adjust: 100% !important;
+      -webkit-font-smoothing: antialiased !important;
+    }
+    figure.highlight .gutter {
+      min-width: 2.4em !important;
+      width: 2.4em !important;
+    }
+    figure.highlight .code {
+      padding-left: 5px !important;
+    }
+  }
+  /* Android Chrome specific fixes */
+  /* Small screen additional fixes */
+}
+@media (max-width: 768px) and (pointer: coarse) and (hover: none) {
+  figure.highlight .gutter,
+  figure.highlight .code {
+    line-height: 1.45 !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+}
+@media (max-width: 768px) and (max-width: 480px) {
+  figure.highlight .gutter,
+  figure.highlight .code {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+  figure.highlight .gutter {
+    min-width: 2.4em !important;
+    width: 2.4em !important;
+    padding-right: 3px !important;
+  }
+  figure.highlight .code {
+    padding-left: 4px !important;
+  }
+}
+/* Dark mode styles for figure elements */
+@media (prefers-color-scheme: dark) {
+  body[data-color-scheme=auto] figure.highlight .gutter {
+    border-right-color: transparent !important;
+  }
+}
+body[data-color-scheme=dark] figure.highlight .gutter {
+  border-right-color: transparent !important;
+}
+
+body[data-color-scheme=auto] .highlight .name,
+body[data-color-scheme=light] .highlight .name {
+  color: #116329; /* 更鲜亮的绿色 */
+}
+body[data-color-scheme=auto] .highlight .attr,
+body[data-color-scheme=auto] .highlight .meta,
+body[data-color-scheme=auto] .highlight .meta-keyword,
+body[data-color-scheme=auto] .highlight .attribute,
+body[data-color-scheme=auto] .highlight .number,
+body[data-color-scheme=auto] .highlight .selector-class,
+body[data-color-scheme=light] .highlight .attr,
+body[data-color-scheme=light] .highlight .meta,
+body[data-color-scheme=light] .highlight .meta-keyword,
+body[data-color-scheme=light] .highlight .attribute,
+body[data-color-scheme=light] .highlight .number,
+body[data-color-scheme=light] .highlight .selector-class {
+  color: #0969da; /* GitHub蓝色 */
+}
+body[data-color-scheme=auto] .highlight .string,
+body[data-color-scheme=light] .highlight .string {
+  color: #0a3069; /* 深蓝色 */
+}
+body[data-color-scheme=auto] .highlight .symbol,
+body[data-color-scheme=light] .highlight .symbol {
+  color: #0969da; /* GitHub蓝色 */
+}
+body[data-color-scheme=auto] .highlight .selector-tag,
+body[data-color-scheme=light] .highlight .selector-tag {
+  color: #116329; /* 更鲜亮的绿色 */
+}
+body[data-color-scheme=auto] .highlight .built_in,
+body[data-color-scheme=light] .highlight .built_in {
+  color: #8250df; /* 紫色 */
+}
+body[data-color-scheme=auto] .highlight .keyword,
+body[data-color-scheme=light] .highlight .keyword {
+  color: #cf222e; /* 红色 */
+}
+body[data-color-scheme=auto] .highlight .comment,
+body[data-color-scheme=light] .highlight .comment {
+  color: #59636e; /* 更柔和的灰色 */
+}
+body[data-color-scheme=auto] .highlight .function,
+body[data-color-scheme=light] .highlight .function {
+  color: #8250df; /* 紫色 */
+}
+body[data-color-scheme=auto] .highlight .variable,
+body[data-color-scheme=light] .highlight .variable {
+  color: #0550ae; /* 深蓝色 */
+}
+body[data-color-scheme=auto] .highlight .operator,
+body[data-color-scheme=light] .highlight .operator {
+  color: #cf222e; /* 红色 */
+}
+body[data-color-scheme=auto] .highlight .parameter,
+body[data-color-scheme=light] .highlight .parameter {
+  color: #0550ae; /* 深蓝色 */
+}
+
+@media (prefers-color-scheme: dark) {
+  body[data-color-scheme=auto] .highlight .name {
+    color: #50fa7b;
+  }
+  body[data-color-scheme=auto] .highlight .attr,
+  body[data-color-scheme=auto] .highlight .meta,
+  body[data-color-scheme=auto] .highlight .meta-keyword,
+  body[data-color-scheme=auto] .highlight .attribute,
+  body[data-color-scheme=auto] .highlight .number,
+  body[data-color-scheme=auto] .highlight .selector-class {
+    color: #bd93f9;
+  }
+  body[data-color-scheme=auto] .highlight .string {
+    color: #f1fa8c;
+  }
+  body[data-color-scheme=auto] .highlight .symbol {
+    color: #ff79c6;
+  }
+  body[data-color-scheme=auto] .highlight .selector-tag {
+    color: #ff79c6;
+  }
+  body[data-color-scheme=auto] .highlight .built_in {
+    color: #8be9fd;
+  }
+  body[data-color-scheme=auto] .highlight .keyword {
+    color: #ff79c6;
+  }
+  body[data-color-scheme=auto] .highlight .comment {
+    color: #6272a4;
+  }
+  body[data-color-scheme=auto] .highlight .function {
+    color: #50fa7b;
+  }
+  body[data-color-scheme=auto] .highlight .variable {
+    color: #f8f8f2;
+  }
+  body[data-color-scheme=auto] .highlight .operator {
+    color: #ff79c6;
+  }
+  body[data-color-scheme=auto] .highlight .parameter {
+    color: #f8f8f2;
+  }
+}
+body[data-color-scheme=dark] .highlight .name {
+  color: #50fa7b;
+}
+body[data-color-scheme=dark] .highlight .attr,
+body[data-color-scheme=dark] .highlight .meta,
+body[data-color-scheme=dark] .highlight .meta-keyword,
+body[data-color-scheme=dark] .highlight .attribute,
+body[data-color-scheme=dark] .highlight .number,
+body[data-color-scheme=dark] .highlight .selector-class {
+  color: #bd93f9;
+}
+body[data-color-scheme=dark] .highlight .string {
+  color: #f1fa8c;
+}
+body[data-color-scheme=dark] .highlight .symbol {
+  color: #ff79c6;
+}
+body[data-color-scheme=dark] .highlight .selector-tag {
+  color: #ff79c6;
+}
+body[data-color-scheme=dark] .highlight .built_in {
+  color: #8be9fd;
+}
+body[data-color-scheme=dark] .highlight .keyword {
+  color: #ff79c6;
+}
+body[data-color-scheme=dark] .highlight .comment {
+  color: #6272a4;
+}
+body[data-color-scheme=dark] .highlight .function {
+  color: #50fa7b;
+}
+body[data-color-scheme=dark] .highlight .variable {
+  color: #f8f8f2;
+}
+body[data-color-scheme=dark] .highlight .operator {
+  color: #ff79c6;
+}
+body[data-color-scheme=dark] .highlight .parameter {
+  color: #f8f8f2;
+}
