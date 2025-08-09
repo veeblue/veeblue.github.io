@@ -13,12 +13,12 @@
   <link rel='manifest' href='/manifest.json'>
   
 
-  <meta name="description" content="1.Hexo安装以macOS为例 安装Hexo：npm install -g hexo-cli  选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path  然后初始化Hexo：hexo init blog  进入blog文件夹: cd blog  安装依赖：npm install  启动服务：hexo server  访问：localhost:40">
+  <meta name="description" content="1.Hexo安装 以macOS为例   安装Hexo：npm install -g hexo-cli   选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path   然后初始化Hexo：hexo init blog   进入blog文件夹: cd blog   安装依赖：npm install   启动服务：hexo server   访问：loc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2025搭建 github + Hexo 个人博客">
 <meta property="og:url" content="https://blog.veeblue.com/2025/07/02/2025%E6%90%AD%E5%BB%BA-github-Hexo-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
 <meta property="og:site_name" content="Veeblue">
-<meta property="og:description" content="1.Hexo安装以macOS为例 安装Hexo：npm install -g hexo-cli  选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path  然后初始化Hexo：hexo init blog  进入blog文件夹: cd blog  安装依赖：npm install  启动服务：hexo server  访问：localhost:40">
+<meta property="og:description" content="1.Hexo安装 以macOS为例   安装Hexo：npm install -g hexo-cli   选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path   然后初始化Hexo：hexo init blog   进入blog文件夹: cd blog   安装依赖：npm install   启动服务：hexo server   访问：loc">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.veeblue.com/images/image-20250702213318274.png">
 <meta property="og:image" content="https://blog.veeblue.com/images/image-20250702220239010.png">
@@ -259,49 +259,63 @@
   </div>
 
   <div class="content">
-    <h1 id="1-Hexo安装"><a href="#1-Hexo安装" class="headerlink" title="1.Hexo安装"></a>1.Hexo安装</h1><h4 id="以macOS为例"><a href="#以macOS为例" class="headerlink" title="以macOS为例"></a>以macOS为例</h4><ul>
-<li><p>安装Hexo：<code>npm install -g hexo-cli</code></p>
+    <h1>1.Hexo安装</h1>
+<h4 id="以macOS为例">以macOS为例</h4>
+<ul>
+<li>
+<p>安装Hexo：<code>npm install -g hexo-cli</code></p>
 </li>
-<li><p>选好要安装的目录：<code>your/custom/path</code>,然后进入该目录<code>cd your/custom/path</code></p>
+<li>
+<p>选好要安装的目录：<code>your/custom/path</code>,然后进入该目录<code>cd your/custom/path</code></p>
 </li>
-<li><p>然后初始化Hexo：<code>hexo init blog</code></p>
+<li>
+<p>然后初始化Hexo：<code>hexo init blog</code></p>
 </li>
-<li><p>进入blog文件夹: <code>cd blog</code></p>
+<li>
+<p>进入blog文件夹: <code>cd blog</code></p>
 </li>
-<li><p>安装依赖：<code>npm install</code></p>
+<li>
+<p>安装依赖：<code>npm install</code></p>
 </li>
-<li><p>启动服务：<code>hexo server</code></p>
+<li>
+<p>启动服务：<code>hexo server</code></p>
 </li>
-<li><p>访问：<code>localhost:4000</code></p>
+<li>
+<p>访问：<code>localhost:4000</code></p>
 <p><img src="/images/image-20250702213318274.png" alt="image-20250702213318274"></p>
 </li>
 </ul>
-<h1 id="2-主题配置"><a href="#2-主题配置" class="headerlink" title="2.主题配置"></a>2.主题配置</h1><blockquote>
+<h1>2.主题配置</h1>
+<blockquote>
 <p>主题：<a target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
 </blockquote>
 <ul>
-<li><p>在<code>blog</code>目录下：</p>
+<li>
+<p>在<code>blog</code>目录下：</p>
 <ul>
-<li><p>首先：<code>git init</code></p>
+<li>
+<p>首先：<code>git init</code></p>
 </li>
-<li><p>然后：<code>git submodule add https://github.com/Your/Hexo_Theme.git themes/Hexo_Theme_Name</code></p>
+<li>
+<p>然后：<code>git submodule add https://github.com/Your/Hexo_Theme.git themes/Hexo_Theme_Name</code></p>
 </li>
-<li><p>修改<code>blog</code>目录下的<code>_config.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">Hexo_Theme_Name</span></span><br></pre></td></tr></table></figure></li>
+<li>
+<p>修改<code>blog</code>目录下的<code>_config.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">Hexo_Theme_Name</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>
-<h1 id="3-部署到Github"><a href="#3-部署到Github" class="headerlink" title="3.部署到Github"></a>3.部署到Github</h1><ul>
+<h1>3.部署到Github</h1>
+<ul>
 <li>修改<code>blog</code>目录下的<code>_config.yml</code></li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># repo 建议使用ssh的方式 自行搜索或者AI 仓库提前创建，仓库名：your_github_username.github.io</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:your_github_username/your_github_username.github.io.git</span> </span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>安装<code>deploy-git</code>: <code>npm install hexo-deployer-git --save</code></li>
 <li>然后：</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean #清除之前生成的东西</span><br><span class="line">hexo generate  #生成静态文章，缩写hexo g</span><br><span class="line">hexo deploy  #部署文章，缩写hexo d</span><br></pre></td></tr></table></figure>
-
 <p>部署完成，访问<code>your_github_username.github.io</code>即可</p>
 <ul>
 <li>使用自己的域名：<code>your_github_username.github.io -&gt; Settings -&gt; Pages -&gt; Custom domain</code></li>
