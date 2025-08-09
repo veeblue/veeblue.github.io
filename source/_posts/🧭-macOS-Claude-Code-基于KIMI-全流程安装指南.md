@@ -2,7 +2,7 @@
 title: 🧭 macOS Claude Code(使用Kimi Api)全流程安装指南
 date: 2025-07-19 10:48:23
 tags: [claude, kimi, macOS]
-categories: Tutorial
+categories: TUTORIAL
 cover: /images/250719_cover.png
 cover_image: /images/250719_cover.png
 ---

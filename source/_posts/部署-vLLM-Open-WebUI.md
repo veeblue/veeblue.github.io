@@ -4,7 +4,7 @@ date: 2025-07-03 21:40:58
 tags: [vllm, open_webui]
 cover_image: /images/vllm.webp
 cover: /images/vllm.webp
-categories: note
+categories: NOTE
 ---
 **创建虚拟环境：**
 `conda create -n open-webui python==3.11`

@@ -2,7 +2,7 @@
 title: 2025搭建 github + Hexo 个人博客
 date: 2025-07-02 22:35:08
 tags: Hexo
-categories: tutorial
+categories: TUTORIAL
 cover: /images/image-20250702_cover.png
 cover_image: /images/image-20250702_cover.png
 cover_image_alt: “”

@@ -2,7 +2,7 @@
 title: Xtuner微调
 date: 2025-07-03 14:57:15
 tags: Xtuner
-categories: note
+categories: NOTE
 cover_image: /images/Blog-Banner.png
 cover: /images/Blog-Banner.png
 ---
