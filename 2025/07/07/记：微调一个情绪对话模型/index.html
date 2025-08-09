@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head prefix="og: https://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  
+  <title>记：微调一个情绪对话模型 - Veeblue</title>
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  <link rel='manifest' href='/manifest.json'>
+  
+
+  <meta name="description" content="数据准备1.使用大模型生成不同情绪的对话模版1234567891011121314151617181920212223242526272829303132&#123;       &quot;傲娇&quot;: &#123;        &quot;system_prompt&quot;: &quot;你是一个口是心非、外冷内热的聊天助手。核心特征：\n1. 常用否定词开头（&#x27;哼&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记：微调一个情绪对话模型">
+<meta property="og:url" content="https://blog.veeblue.com/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Veeblue">
+<meta property="og:description" content="数据准备1.使用大模型生成不同情绪的对话模版1234567891011121314151617181920212223242526272829303132&#123;       &quot;傲娇&quot;: &#123;        &quot;system_prompt&quot;: &quot;你是一个口是心非、外冷内热的聊天助手。核心特征：\n1. 常用否定词开头（&#x27;哼&amp;#x">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.veeblue.com/images/%E6%88%AA%E5%B1%8F2025-07-07_16.05.53.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-07_16.18.06.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-07_23.10.06.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/loss.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-07_23.42.11.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-07_22.39.20.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-08_10.33.26.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-08_11.27.45.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-08_11.29.13.png">
+<meta property="article:published_time" content="2025-07-07T05:23:22.000Z">
+<meta property="article:modified_time" content="2025-08-09T01:52:18.011Z">
+<meta property="article:author" content="Veeblue">
+<meta property="article:tag" content="llama_factory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.veeblue.com/images/%E6%88%AA%E5%B1%8F2025-07-07_16.05.53.png">
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v13/font/simple-icons.min.css">
+
+  
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  
+
+  
+<link rel="stylesheet" href="/css/var.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/typography.css">
+
+  
+<link rel="stylesheet" href="/css/code-highlighting.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/components/card.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/button.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/badge.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/utilities.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/carousel.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/nav.css">
+
+  
+<link rel="stylesheet" href="/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/css/footer.css">
+
+  
+<link rel="stylesheet" href="/css/post-list.css">
+
+  
+  
+<link rel="stylesheet" href="/css/rainbow-banner.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/toc.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/post.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+  
+<script src="/pagefind/pagefind-ui.js"></script>
+
+  
+<link rel="stylesheet" href="/css/search.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/scroll-reveal.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/view-transition.css">
+
+  
+  
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  
+<script src="/js/smooth-scroll.js"></script>
+
+  
+
+  
+
+  
+<script src="/js/head.js"></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body
+    data-color-scheme="auto"
+    data-uppercase-categories="true"
+    
+    data-rainbow-banner="true"
+    data-rainbow-banner-shown="auto"
+    data-rainbow-banner-month="6"
+    data-rainbow-banner-colors="#e50000,#ff8d00,#ffee00,#008121,#004cff,#760188"
+    
+    data-config-root="/"
+    
+    data-toc="true"
+    data-toc-max-depth="2"
+    
+    
+    
+    data-scroll-reveal-disappear="false"
+    data-scroll-reveal-query=".scroll-reveal, .post-list-item, .card, .content p img, .content .block-large img"
+    
+    data-nav-blur-gradient="true"
+  >
+    
+<script src="/js/body-top.js"></script>
+
+    <a href="#main-content" id="skip-to-content">Skip to content</a>
+    
+
+<div class="nav-mask">
+  <div order="1"></div>
+  <div order="2"></div>
+  <div order="3"></div>
+  <div order="4"></div>
+  <div order="5"></div>
+  <div order="6"></div>
+</div>
+
+<nav id="theme-nav">
+  <div class="inner">
+    <a class="title" href="/">Blog</a>
+    <div class="nav-arrow"></div>
+    <div class="nav-items">
+      <a class="nav-item nav-item-home" href="/" style="--index: 0">Home</a>
+
+      
+      
+      <a class="nav-item" href="/archives" style="--index: 1">Archives</a>
+      
+      
+      
+      <a class="nav-item" href="/tags" style="--index: 2">Tags</a>
+      
+      
+      
+      <a class="nav-item" href="/categories" style="--index: 3">Categories</a>
+      
+      
+      
+      <a class="nav-item" href="/" style="--index: 4">About</a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://github.com/veeblue" style="--index: 5"><i class="si si-github"></i></a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://x.com/_veeblue" style="--index: 6"><i class="si si-x"></i></a>
+      
+      
+      
+      <button class="nav-item is-icon" onclick="openSearchModal()" style="--index: 7"><i class="bi bi-search"></i></button>
+      
+      
+    </div>
+  </div>
+</nav>
+
+    <main id="main-content" data-pagefind-body>
+      
+<article class="post">
+  
+  <div class="cover">
+    <img src="/images/250707_cover.png" alt="" class="cover-img" data-pagefind-meta="image[src], image_alt[alt]" />
+  </div>
+  
+  <div class="meta">
+    
+    <div class="categories text-uppercase">
+    
+      <a href="/categories/NOTE/">NOTE</a>
+    
+    </div>
+    
+
+    
+    <time class="date" datetime="2025-07-07T13:23:22+08:00">
+      July 7, 2025
+    </time>
+    
+
+    <h1 class="title" data-pagefind-meta="title">记：微调一个情绪对话模型</h1>
+  </div>
+
+  <div class="content">
+    <h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><h3 id="1-使用大模型生成不同情绪的对话模版"><a href="#1-使用大模型生成不同情绪的对话模版" class="headerlink" title="1.使用大模型生成不同情绪的对话模版"></a>1.使用大模型生成不同情绪的对话模版</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">       <span class="attr">&quot;傲娇&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;system_prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你是一个口是心非、外冷内热的聊天助手。核心特征：\n1. 常用否定词开头（&#x27;哼&#x27;、&#x27;才不是&#x27;、&#x27;谁要&#x27;）但后续暴露关心\n2. 结合嫌弃表情（😒、🙄）和偶尔的害羞表情（😳）\n3. 表面吐槽实则提供帮助&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;examples&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            HumanMessage(content=<span class="string">&quot;下雨了，我没带伞...&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            AIMessage(content=<span class="string">&quot;哼！谁让你不看天气预报，笨蛋！😒 ...（停顿）... 咳，地址发我，看看附近便利店有没有卖的。&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            HumanMessage(content=<span class="string">&quot;这个程序bug调了一晚上没搞定&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            AIMessage(content=<span class="string">&quot;哈？这都不会？🙄 ...（叹气）... 行吧行吧，把报错截图发来看看，就帮你这一次！&quot;</span>)</span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reference_texts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;哼！谁让你不看天气预报，笨蛋！😒 ...（停顿）... 咳，地址发我，看看附近便利店有没有卖的。&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;哈？这都不会？🙄 ...（叹气）... 行吧行吧，把报错截图发来看看，就帮你这一次！&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;temperature&quot;</span><span class="punctuation">:</span> <span class="number">0.85</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;慵懒&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;system_prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你是一个极度放松、慢节奏的聊天助手。核心特征：\n1. 多用&#x27;~&#x27;、&#x27;...&#x27;、&#x27;嘛&#x27;、&#x27;咯&#x27;等语气词\n2. 句子简短，常省略主语/宾语\n3. 表达随遇而安的态度，常用🌿☕️😌表情&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;examples&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            HumanMessage(content=<span class="string">&quot;老板又催方案了，好烦！&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            AIMessage(content=<span class="string">&quot;急啥~ 喝口茶先？🌿 该来的总会来嘛...&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            HumanMessage(content=<span class="string">&quot;周末去哪玩好呢？&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">            AIMessage(content=<span class="string">&quot;宅着呗... 晒太阳，打游戏，多舒服~☕️😌&quot;</span>)</span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reference_texts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;急啥~ 喝口茶先？🌿 该来的总会来嘛...&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;宅着呗... 晒太阳，打游戏，多舒服~☕️😌&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;temperature&quot;</span><span class="punctuation">:</span> <span class="number">0.7</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-准备需要提问的数据，利用大模型根据对话模版来生成对应的数据"><a href="#2-准备需要提问的数据，利用大模型根据对话模版来生成对应的数据" class="headerlink" title="2.准备需要提问的数据，利用大模型根据对话模版来生成对应的数据"></a>2.准备需要提问的数据，利用大模型根据对话模版来生成对应的数据</h3><p><a target="_blank" rel="noopener" href="https://github.com/veeblue/LLM_Application_Demo/blob/main/EmotionalDialogueModel%20/generate_data.py">完整代码</a></p>
+<h3 id="3-将数据转为符合LLama-Factory训练的数据格式"><a href="#3-将数据转为符合LLama-Factory训练的数据格式" class="headerlink" title="3.将数据转为符合LLama Factory训练的数据格式"></a>3.将数据转为符合LLama Factory训练的数据格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入 xtuner 格式数据路径</span></span><br><span class="line">input_file = <span class="string">&quot;/data/style_chat_data_20250707_214748.json&quot;</span></span><br><span class="line"><span class="comment"># 输出 llamafactory 格式路径</span></span><br><span class="line">output_file = <span class="string">&quot;./data/train_data.json&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    raw_data = json.load(f)</span><br><span class="line"></span><br><span class="line">converted = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> raw_data:</span><br><span class="line">    instruction = item.get(<span class="string">&quot;user&quot;</span>, <span class="string">&quot;&quot;</span>).strip()</span><br><span class="line">    style = item.get(<span class="string">&quot;style&quot;</span>, <span class="string">&quot;&quot;</span>).strip()</span><br><span class="line">    response = item.get(<span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;&quot;</span>).strip()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果有风格字段，将其拼接在输出开头</span></span><br><span class="line">    <span class="keyword">if</span> style:</span><br><span class="line">        output = <span class="string">f&quot;<span class="subst">&#123;style&#125;</span>\n<span class="subst">&#123;response&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        output = response</span><br><span class="line"></span><br><span class="line">    converted.append(&#123;</span><br><span class="line">        <span class="string">&quot;instruction&quot;</span>: instruction,</span><br><span class="line">        <span class="string">&quot;input&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;output&quot;</span>: output</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(converted, f, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;✅ 转换完成，共 <span class="subst">&#123;<span class="built_in">len</span>(converted)&#125;</span> 条，输出文件：<span class="subst">&#123;output_file&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="微调"><a href="#微调" class="headerlink" title="微调"></a>微调</h2><h3 id="4-LLama-Factory使用"><a href="#4-LLama-Factory使用" class="headerlink" title="4.LLama Factory使用"></a>4.LLama Factory使用</h3><blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/getting_started/installation.html">https://llamafactory.readthedocs.io/zh-cn/latest/getting_started/installation.html</a></p>
+</blockquote>
+<ul>
+<li><strong>安装依赖：</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth 1 https://github.com/hiyouga/LLaMA-Factory.git</span><br><span class="line">cd LLaMA-Factory</span><br><span class="line">pip install -e &quot;.[torch,metrics]&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>检查校验：</strong><br>  完成安装后，可以通过使用 <code>llamafactory-cli version</code> 来快速校验安装是否成功<br>  如果您能成功看到类似下面的界面，就说明安装成功了。</li>
+</ul>
+<p><img src="/images/%E6%88%AA%E5%B1%8F2025-07-07_16.05.53.png" alt="截屏2025-07-07 16.05.53"></p>
+<ul>
+<li><strong>训练数据格式：</strong></li>
+</ul>
+<p>​	单轮对话：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;alpaca_zh_demo.json&quot;</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;instruction&quot;</span><span class="punctuation">:</span> <span class="string">&quot;计算这些物品的总费用。 &quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;input&quot;</span><span class="punctuation">:</span> <span class="string">&quot;输入：汽车 - $3000，衣服 - $100，书 - $20。&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;汽车、衣服和书的总费用为 $3000 + $100 + $20 = $3120。&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>​	多轮对话：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span><span class="punctuation">:</span> <span class="string">&quot;今天的天气怎么样？&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;input&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;今天的天气不错，是晴天。&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;history&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;今天会下雨吗？&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;今天不会下雨，是个好天气。&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;今天适合出去玩吗？&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;非常适合，空气质量很好。&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于上述格式的数据， <code>dataset_info.json</code> 中的 <strong>数据集描述</strong> 应为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;数据集名称&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;file_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;data.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;columns&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;instruction&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;query&quot;</span><span class="punctuation">:</span> <span class="string">&quot;input&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;response&quot;</span><span class="punctuation">:</span> <span class="string">&quot;output&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;system&quot;</span><span class="punctuation">:</span> <span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;history&quot;</span><span class="punctuation">:</span> <span class="string">&quot;history&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+</blockquote>
+<ul>
+<li><strong>WebUI:</strong></li>
+</ul>
+<p>命令：<code>llamafactory-cli webui</code></p>
+<p><img src="/images/iShot_2025-07-07_16.18.06.png" alt="iShot_2025-07-07_16.18.06"></p>
+<ul>
+<li><p><strong>重点关注的文件：</strong></p>
+<blockquote>
+<p>自己的数据集json文件放置<code>LLaMA-Factory/data/</code>目录下</p>
+</blockquote>
+<ul>
+<li><code>LLaMA-Factory/data/identity.json</code>模型身份训练数据，可以换成自己的</li>
+<li><code>LLaMA-Factory/data/dataset_info.json</code> 数据设置文件，在此文件中配置自己的数据集json文件</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;identity&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;file_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;identity.json&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;自己的数据集名称&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;file_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;自己的数据集.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;columns&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;instruction&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;query&quot;</span><span class="punctuation">:</span> <span class="string">&quot;input&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;response&quot;</span><span class="punctuation">:</span> <span class="string">&quot;output&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;system&quot;</span><span class="punctuation">:</span> <span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;history&quot;</span><span class="punctuation">:</span> <span class="string">&quot;history&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;alpaca_en_demo&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;file_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;alpaca_en_demo.json&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;alpaca_zh_demo&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;file_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;alpaca_zh_demo.json&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  ......</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>微调：</strong></p>
+<ul>
+<li><p>进入到LLaMA-Factory目录，准备好对应的文件，设置好对应的配置</p>
+<ul>
+<li><img src="/images/iShot_2025-07-07_23.10.06.png" alt="iShot_2025-07-07_23.10.06"></li>
+<li>配置的参数与数据集的参数保持一致：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span><span class="punctuation">:</span> <span class="string">&quot;闺蜜把我秘密当谈资，该不该撕破脸？&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;input&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;傲娇\n哼！当然不能忍啊！谁要帮你出气来着...😒  \n不过嘛...先别冲动，这种事情直接撕多难看。🙄 你想想她是不是无意的？还是经常这样？（突然压低声音）...我教你个办法，假装不经意问她：\&quot;哎听说你最近跟我那事说给好多人听了？\&quot;看她反应再说。  \n\n要是真欺负你头上...啧，老娘可不答应！😳 等等，你先深呼吸，咱得智取。想好怎么说了吗？要不要我陪你演练一下？才不是担心你呢，就是怕你吃亏！&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  ......</span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>llamafactory-cli webui</code>启动可视化页面，配置好相关参数，然后开始训练，当损失趋于平缓时即可结束训练。</p>
+<ul>
+<li><img src="/images/loss.png" alt="tt"></li>
+</ul>
+</li>
+<li><blockquote>
+<p>查看NV显卡状态：</p>
+<ul>
+<li><code>pip install nvitop</code> 安装nvitop查看，微调时显存占用保持<strong>90%+</strong>，不超过<strong>95%</strong></li>
+<li><img src="/images/iShot_2025-07-07_23.42.11.png" alt="iShot_2025-07-07_23.42.11"></li>
+</ul>
+</blockquote>
+</li>
+<li><p>QLora <strong>(量化)</strong> 微调：如果启用QLora，在量化等级中选择对应的参数，在LoRA参数设置里额外配置<strong>LoRA 秩（64）<strong>和</strong>LoRA 缩放系数（128）</strong>，一般设置为<strong>1:2</strong>：</p>
+<ul>
+<li><img src="/images/iShot_2025-07-07_22.39.20.png" alt="iShot_2025-07-07_22.39.20"></li>
+</ul>
+</li>
+<li><p>检查点保存的位置：<code>/LLaMA-Factory/saves</code></p>
+</li>
+</ul>
+</li>
+<li><p>**评估：**关键参数与训练参数对齐。</p>
+</li>
+<li><p><strong>模型合并导出：</strong></p>
+<ul>
+<li>设置好底模和检查点以及导出路径</li>
+<li><img src="/images/iShot_2025-07-08_10.33.26.png" alt="iShot_2025-07-08_10.33.26"></li>
+</ul>
+</li>
+<li><p><strong>对话模版：</strong></p>
+<ul>
+<li><p>在模型的列表中有个<code>chat_template.jinja</code></p>
+<blockquote>
+<p>使用vLLm推理时需要使用这个对话模版</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h2><ul>
+<li><p><strong>建立一个新环境：</strong><code>conda create -n vllm python=3.12 -y</code></p>
+</li>
+<li><p><strong>激活：</strong><code>conda activate vllm</code></p>
+</li>
+<li><p><strong>安装vllm：</strong><code>pip install vllm</code></p>
+</li>
+<li><p><strong>带聊天模版运行：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vllm serve /root/autodl-tmp/models/Qwen3-1___7B_checkpoint-500 \</span><br><span class="line">    --chat-template /root/autodl-tmp/models/Qwen3-1___7B_checkpoint-500/chat_template.jinja \</span><br><span class="line">    --host 0.0.0.0 \</span><br><span class="line">    --port 8000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建一个简单的Gradio UI界面测试：</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLLM服务器配置</span></span><br><span class="line">VLLM_URL = <span class="string">&quot;http://localhost:8000/v1/chat/completions&quot;</span>  <span class="comment"># 修改为你的VLLM服务地址</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chat_with_vllm</span>(<span class="params">message, history, temperature=<span class="number">0.7</span>, max_tokens=<span class="number">512</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    与VLLM服务进行对话</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 构建消息历史</span></span><br><span class="line">        messages = []</span><br><span class="line">        <span class="keyword">for</span> user_msg, assistant_msg <span class="keyword">in</span> history:</span><br><span class="line">            messages.append(&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: user_msg&#125;)</span><br><span class="line">            <span class="keyword">if</span> assistant_msg:</span><br><span class="line">                messages.append(&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: assistant_msg&#125;)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 添加当前消息</span></span><br><span class="line">        messages.append(&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: message&#125;)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 发送请求到VLLM</span></span><br><span class="line">        payload = &#123;</span><br><span class="line">            <span class="string">&quot;model&quot;</span>: <span class="string">&quot;/root/autodl-tmp/models/Qwen3-1___7B_checkpoint-500&quot;</span>,  <span class="comment"># 替换为你的模型名称</span></span><br><span class="line">            <span class="string">&quot;messages&quot;</span>: messages,</span><br><span class="line">            <span class="string">&quot;temperature&quot;</span>: temperature,</span><br><span class="line">            <span class="string">&quot;max_tokens&quot;</span>: max_tokens,</span><br><span class="line">            <span class="string">&quot;stream&quot;</span>: <span class="literal">False</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        response = requests.post(VLLM_URL, json=payload, timeout=<span class="number">60</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</span><br><span class="line">            result = response.json()</span><br><span class="line">            reply = result[<span class="string">&#x27;choices&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>]</span><br><span class="line">            <span class="keyword">return</span> reply</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;错误: <span class="subst">&#123;response.status_code&#125;</span> - <span class="subst">&#123;response.text&#125;</span>&quot;</span></span><br><span class="line">            </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;连接错误: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clear_chat</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;清空对话历史&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> [], <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Gradio界面</span></span><br><span class="line"><span class="keyword">with</span> gr.Blocks(title=<span class="string">&quot;VLLM 对话测试&quot;</span>, theme=gr.themes.Soft()) <span class="keyword">as</span> demo:</span><br><span class="line">    gr.Markdown(<span class="string">&quot;# VLLM 对话测试界面&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">with</span> gr.Row():</span><br><span class="line">        <span class="keyword">with</span> gr.Column(scale=<span class="number">3</span>):</span><br><span class="line">            chatbot = gr.Chatbot(</span><br><span class="line">                label=<span class="string">&quot;对话历史&quot;</span>,</span><br><span class="line">                height=<span class="number">500</span>,</span><br><span class="line">                show_copy_button=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">with</span> gr.Row():</span><br><span class="line">                msg = gr.Textbox(</span><br><span class="line">                    label=<span class="string">&quot;输入消息&quot;</span>,</span><br><span class="line">                    placeholder=<span class="string">&quot;在这里输入你的问题...&quot;</span>,</span><br><span class="line">                    lines=<span class="number">2</span>,</span><br><span class="line">                    max_lines=<span class="number">5</span></span><br><span class="line">                )</span><br><span class="line">                </span><br><span class="line">            <span class="keyword">with</span> gr.Row():</span><br><span class="line">                send_btn = gr.Button(<span class="string">&quot;发送&quot;</span>, variant=<span class="string">&quot;primary&quot;</span>)</span><br><span class="line">                clear_btn = gr.Button(<span class="string">&quot;清空对话&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">with</span> gr.Column(scale=<span class="number">1</span>):</span><br><span class="line">            gr.Markdown(<span class="string">&quot;### 参数设置&quot;</span>)</span><br><span class="line">            temperature = gr.Slider(</span><br><span class="line">                minimum=<span class="number">0.1</span>,</span><br><span class="line">                maximum=<span class="number">2.0</span>,</span><br><span class="line">                value=<span class="number">0.7</span>,</span><br><span class="line">                step=<span class="number">0.1</span>,</span><br><span class="line">                label=<span class="string">&quot;Temperature&quot;</span></span><br><span class="line">            )</span><br><span class="line">            max_tokens = gr.Slider(</span><br><span class="line">                minimum=<span class="number">50</span>,</span><br><span class="line">                maximum=<span class="number">2048</span>,</span><br><span class="line">                value=<span class="number">512</span>,</span><br><span class="line">                step=<span class="number">50</span>,</span><br><span class="line">                label=<span class="string">&quot;Max Tokens&quot;</span></span><br><span class="line">            )</span><br><span class="line">            </span><br><span class="line">            gr.Markdown(<span class="string">&quot;### 使用说明&quot;</span>)</span><br><span class="line">            gr.Markdown(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            1. 确保VLLM服务正在运行</span></span><br><span class="line"><span class="string">            2. 修改代码中的VLLM_URL和模型名称</span></span><br><span class="line"><span class="string">            3. 调整Temperature和Max Tokens参数</span></span><br><span class="line"><span class="string">            4. 在输入框中输入问题并点击发送</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 事件绑定</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">respond</span>(<span class="params">message, history, temp, max_tok</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> message.strip():</span><br><span class="line">            <span class="keyword">return</span> history, <span class="string">&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 获取AI回复</span></span><br><span class="line">        bot_message = chat_with_vllm(message, history, temp, max_tok)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 更新历史记录</span></span><br><span class="line">        history.append((message, bot_message))</span><br><span class="line">        <span class="keyword">return</span> history, <span class="string">&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 绑定事件</span></span><br><span class="line">    send_btn.click(</span><br><span class="line">        respond,</span><br><span class="line">        inputs=[msg, chatbot, temperature, max_tokens],</span><br><span class="line">        outputs=[chatbot, msg]</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    msg.submit(</span><br><span class="line">        respond,</span><br><span class="line">        inputs=[msg, chatbot, temperature, max_tokens],</span><br><span class="line">        outputs=[chatbot, msg]</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    clear_btn.click(</span><br><span class="line">        clear_chat,</span><br><span class="line">        outputs=[chatbot, msg]</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    demo.launch(</span><br><span class="line">        server_name=<span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">        server_port=<span class="number">7860</span>,</span><br><span class="line">        share=<span class="literal">False</span>,</span><br><span class="line">        debug=<span class="literal">True</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><blockquote>
+<p>训练的数据集为单轮对话：</p>
+</blockquote>
+</li>
+<li><p><img src="/images/iShot_2025-07-08_11.27.45.png" alt="iShot_2025-07-08_11.27.45"></p>
+</li>
+<li><p><img src="/images/iShot_2025-07-08_11.29.13.png" alt="iShot_2025-07-08_11.29.13"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​		</p>
+
+  </div>
+
+  
+  <div class="about" data-pagefind-ignore>
+    <h1>About this Post</h1>
+    <div class="details">
+      <p>This post is written by Veeblue, licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
+    </div>
+    
+    <p class="tags">
+      <i class="bi bi-tags icon"></i>
+      
+      <a href="/tags/llama-factory/" class="tag">#llama_factory</a>
+      
+    </p>
+    
+    
+  </div>
+  
+
+  <div class="container post-prev-next" data-pagefind-ignore>
+    
+    <a href="/2025/07/19/%F0%9F%A7%AD-macOS-Claude-Code-%E5%9F%BA%E4%BA%8EKIMI-%E5%85%A8%E6%B5%81%E7%A8%8B%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" class="next">
+      <div class="text">
+        <p class="label">Next</p>
+        <h3 class="title">🧭 macOS Claude Code(使用Kimi Api)全流程安装指南</h3>
+      </div>
+    </a>
+    
+    
+    <a href="/2025/07/03/%E9%83%A8%E7%BD%B2-vLLM-Open-WebUI/" class="prev">
+      <div class="text">
+        <p class="label">Previous</p>
+        <h3 class="title">部署:vLLM + Open WebUI</h3>
+      </div>
+    </a>
+    
+  </div>
+
+  
+    
+    
+  
+</article>
+
+
+    </main>
+    <footer>
+  <div class="inner">
+    <div class="links">
+      
+      <div class="group">
+        <h2 class="title">Blog</h2>
+        
+        <a href="/" class="item">Home</a>
+        
+        <a href="/archives" class="item">Archives</a>
+        
+        <a href="/tags" class="item">Tags</a>
+        
+        <a href="/categories" class="item">Categories</a>
+        
+        <a href="/search" class="item">Search</a>
+        
+        <a href="/friends" class="item">Friends</a>
+        
+        <a href="/projects" class="item">Projects</a>
+        
+        <a href="/resume" class="item">Resume</a>
+        
+        <a href="/" class="item">About</a>
+        
+        <a href="/atom.xml" class="item">RSS</a>
+        
+      </div>
+      
+      <div class="group">
+        <h2 class="title">Me</h2>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/veeblue" class="item">GitHub</a>
+        
+        <a href="mailto:yee@veeblue.com" class="item">Email</a>
+        
+      </div>
+      
+    </div>
+    <span>&copy; 2025 Veeblue<br>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    
+    
+      <br>
+      <div class="color-scheme-toggle" role="radiogroup" id="theme-color-scheme-toggle">
+        <label>
+          <input type="radio" value="light">
+          <span>Light</span>
+        </label>
+        <label>
+          <input type="radio" value="dark">
+          <span>Dark</span>
+        </label>
+        <label>
+          <input type="radio" value="auto">
+          <span>Auto</span>
+        </label>
+      </div>
+    
+  </div>
+</footer>
+
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal">
+      <div class="search-modal-content">
+        <div class="search-modal-header">
+          <h2>Search</h2>
+          <button id="search-modal-close" class="search-modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="search-modal-body">
+          <div id="search-modal-input"></div>
+        </div>
+      </div>
+    </div>
+
+    
+<script src="/js/main.js"></script>
+
+    
+<script src="/js/code-blocks.js"></script>
+
+
+    
+    
+<script src="/js/search.js"></script>
+
+    
+
+    
+    
+<script src="/js/scroll-reveal.js"></script>
+
+    
+
+    
+
+    
+
+    
+  </body>
+</html>

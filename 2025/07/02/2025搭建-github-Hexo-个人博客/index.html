@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head prefix="og: https://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  
+  <title>2025搭建 github + Hexo 个人博客 - Veeblue</title>
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  <link rel='manifest' href='/manifest.json'>
+  
+
+  <meta name="description" content="1.Hexo安装以macOS为例 安装Hexo：npm install -g hexo-cli  选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path  然后初始化Hexo：hexo init blog  进入blog文件夹: cd blog  安装依赖：npm install  启动服务：hexo server  访问：localhost:40">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025搭建 github + Hexo 个人博客">
+<meta property="og:url" content="https://blog.veeblue.com/2025/07/02/2025%E6%90%AD%E5%BB%BA-github-Hexo-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="Veeblue">
+<meta property="og:description" content="1.Hexo安装以macOS为例 安装Hexo：npm install -g hexo-cli  选好要安装的目录：your&#x2F;custom&#x2F;path,然后进入该目录cd your&#x2F;custom&#x2F;path  然后初始化Hexo：hexo init blog  进入blog文件夹: cd blog  安装依赖：npm install  启动服务：hexo server  访问：localhost:40">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.veeblue.com/images/image-20250702213318274.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/image-20250702220239010.png">
+<meta property="article:published_time" content="2025-07-02T14:35:08.000Z">
+<meta property="article:modified_time" content="2025-08-09T01:52:06.870Z">
+<meta property="article:author" content="Veeblue">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.veeblue.com/images/image-20250702213318274.png">
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v13/font/simple-icons.min.css">
+
+  
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  
+
+  
+<link rel="stylesheet" href="/css/var.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/typography.css">
+
+  
+<link rel="stylesheet" href="/css/code-highlighting.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/components/card.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/button.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/badge.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/utilities.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/carousel.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/nav.css">
+
+  
+<link rel="stylesheet" href="/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/css/footer.css">
+
+  
+<link rel="stylesheet" href="/css/post-list.css">
+
+  
+  
+<link rel="stylesheet" href="/css/rainbow-banner.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/toc.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/post.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+  
+<script src="/pagefind/pagefind-ui.js"></script>
+
+  
+<link rel="stylesheet" href="/css/search.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/scroll-reveal.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/view-transition.css">
+
+  
+  
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  
+<script src="/js/smooth-scroll.js"></script>
+
+  
+
+  
+
+  
+<script src="/js/head.js"></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body
+    data-color-scheme="auto"
+    data-uppercase-categories="true"
+    
+    data-rainbow-banner="true"
+    data-rainbow-banner-shown="auto"
+    data-rainbow-banner-month="6"
+    data-rainbow-banner-colors="#e50000,#ff8d00,#ffee00,#008121,#004cff,#760188"
+    
+    data-config-root="/"
+    
+    data-toc="true"
+    data-toc-max-depth="2"
+    
+    
+    
+    data-scroll-reveal-disappear="false"
+    data-scroll-reveal-query=".scroll-reveal, .post-list-item, .card, .content p img, .content .block-large img"
+    
+    data-nav-blur-gradient="true"
+  >
+    
+<script src="/js/body-top.js"></script>
+
+    <a href="#main-content" id="skip-to-content">Skip to content</a>
+    
+
+<div class="nav-mask">
+  <div order="1"></div>
+  <div order="2"></div>
+  <div order="3"></div>
+  <div order="4"></div>
+  <div order="5"></div>
+  <div order="6"></div>
+</div>
+
+<nav id="theme-nav">
+  <div class="inner">
+    <a class="title" href="/">Blog</a>
+    <div class="nav-arrow"></div>
+    <div class="nav-items">
+      <a class="nav-item nav-item-home" href="/" style="--index: 0">Home</a>
+
+      
+      
+      <a class="nav-item" href="/archives" style="--index: 1">Archives</a>
+      
+      
+      
+      <a class="nav-item" href="/tags" style="--index: 2">Tags</a>
+      
+      
+      
+      <a class="nav-item" href="/categories" style="--index: 3">Categories</a>
+      
+      
+      
+      <a class="nav-item" href="/" style="--index: 4">About</a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://github.com/veeblue" style="--index: 5"><i class="si si-github"></i></a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://x.com/_veeblue" style="--index: 6"><i class="si si-x"></i></a>
+      
+      
+      
+      <button class="nav-item is-icon" onclick="openSearchModal()" style="--index: 7"><i class="bi bi-search"></i></button>
+      
+      
+    </div>
+  </div>
+</nav>
+
+    <main id="main-content" data-pagefind-body>
+      
+<article class="post">
+  
+  <div class="cover">
+    <img src="/images/image-20250702_cover.png" alt="“”" class="cover-img" data-pagefind-meta="image[src], image_alt[alt]" />
+  </div>
+  
+  <div class="meta">
+    
+    <div class="categories text-uppercase">
+    
+      <a href="/categories/TUTORIAL/">TUTORIAL</a>
+    
+    </div>
+    
+
+    
+    <time class="date" datetime="2025-07-02T22:35:08+08:00">
+      July 2, 2025
+    </time>
+    
+
+    <h1 class="title" data-pagefind-meta="title">2025搭建 github + Hexo 个人博客</h1>
+  </div>
+
+  <div class="content">
+    <h1 id="1-Hexo安装"><a href="#1-Hexo安装" class="headerlink" title="1.Hexo安装"></a>1.Hexo安装</h1><h4 id="以macOS为例"><a href="#以macOS为例" class="headerlink" title="以macOS为例"></a>以macOS为例</h4><ul>
+<li><p>安装Hexo：<code>npm install -g hexo-cli</code></p>
+</li>
+<li><p>选好要安装的目录：<code>your/custom/path</code>,然后进入该目录<code>cd your/custom/path</code></p>
+</li>
+<li><p>然后初始化Hexo：<code>hexo init blog</code></p>
+</li>
+<li><p>进入blog文件夹: <code>cd blog</code></p>
+</li>
+<li><p>安装依赖：<code>npm install</code></p>
+</li>
+<li><p>启动服务：<code>hexo server</code></p>
+</li>
+<li><p>访问：<code>localhost:4000</code></p>
+<p><img src="/images/image-20250702213318274.png" alt="image-20250702213318274"></p>
+</li>
+</ul>
+<h1 id="2-主题配置"><a href="#2-主题配置" class="headerlink" title="2.主题配置"></a>2.主题配置</h1><blockquote>
+<p>主题：<a target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+</blockquote>
+<ul>
+<li><p>在<code>blog</code>目录下：</p>
+<ul>
+<li><p>首先：<code>git init</code></p>
+</li>
+<li><p>然后：<code>git submodule add https://github.com/Your/Hexo_Theme.git themes/Hexo_Theme_Name</code></p>
+</li>
+<li><p>修改<code>blog</code>目录下的<code>_config.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">Hexo_Theme_Name</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="3-部署到Github"><a href="#3-部署到Github" class="headerlink" title="3.部署到Github"></a>3.部署到Github</h1><ul>
+<li>修改<code>blog</code>目录下的<code>_config.yml</code></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># repo 建议使用ssh的方式 自行搜索或者AI 仓库提前创建，仓库名：your_github_username.github.io</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:your_github_username/your_github_username.github.io.git</span> </span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装<code>deploy-git</code>: <code>npm install hexo-deployer-git --save</code></li>
+<li>然后：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean #清除之前生成的东西</span><br><span class="line">hexo generate  #生成静态文章，缩写hexo g</span><br><span class="line">hexo deploy  #部署文章，缩写hexo d</span><br></pre></td></tr></table></figure>
+
+<p>部署完成，访问<code>your_github_username.github.io</code>即可</p>
+<ul>
+<li>使用自己的域名：<code>your_github_username.github.io -&gt; Settings -&gt; Pages -&gt; Custom domain</code></li>
+</ul>
+<blockquote>
+<p>使用自己的域名首先解析一下域名</p>
+</blockquote>
+<p><img src="/images/image-20250702220239010.png" alt="image-20250702220239010"></p>
+<p>使用<code>hexo d</code>部署完后域名会失效，需在<code>source</code>文件夹下新建一个<code>CNAME</code>文件，内容为你的域名。</p>
+
+  </div>
+
+  
+  <div class="about" data-pagefind-ignore>
+    <h1>About this Post</h1>
+    <div class="details">
+      <p>This post is written by Veeblue, licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
+    </div>
+    
+    <p class="tags">
+      <i class="bi bi-tags icon"></i>
+      
+      <a href="/tags/Hexo/" class="tag">#Hexo</a>
+      
+    </p>
+    
+    
+  </div>
+  
+
+  <div class="container post-prev-next" data-pagefind-ignore>
+    
+    <a href="/2025/07/03/Xtuner%E5%BE%AE%E8%B0%83/" class="next">
+      <div class="text">
+        <p class="label">Next</p>
+        <h3 class="title">Xtuner微调</h3>
+      </div>
+    </a>
+    
+    <a class="prev"></a>
+  </div>
+
+  
+    
+    
+  
+</article>
+
+
+    </main>
+    <footer>
+  <div class="inner">
+    <div class="links">
+      
+      <div class="group">
+        <h2 class="title">Blog</h2>
+        
+        <a href="/" class="item">Home</a>
+        
+        <a href="/archives" class="item">Archives</a>
+        
+        <a href="/tags" class="item">Tags</a>
+        
+        <a href="/categories" class="item">Categories</a>
+        
+        <a href="/search" class="item">Search</a>
+        
+        <a href="/friends" class="item">Friends</a>
+        
+        <a href="/projects" class="item">Projects</a>
+        
+        <a href="/resume" class="item">Resume</a>
+        
+        <a href="/" class="item">About</a>
+        
+        <a href="/atom.xml" class="item">RSS</a>
+        
+      </div>
+      
+      <div class="group">
+        <h2 class="title">Me</h2>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/veeblue" class="item">GitHub</a>
+        
+        <a href="mailto:yee@veeblue.com" class="item">Email</a>
+        
+      </div>
+      
+    </div>
+    <span>&copy; 2025 Veeblue<br>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    
+    
+      <br>
+      <div class="color-scheme-toggle" role="radiogroup" id="theme-color-scheme-toggle">
+        <label>
+          <input type="radio" value="light">
+          <span>Light</span>
+        </label>
+        <label>
+          <input type="radio" value="dark">
+          <span>Dark</span>
+        </label>
+        <label>
+          <input type="radio" value="auto">
+          <span>Auto</span>
+        </label>
+      </div>
+    
+  </div>
+</footer>
+
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal">
+      <div class="search-modal-content">
+        <div class="search-modal-header">
+          <h2>Search</h2>
+          <button id="search-modal-close" class="search-modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="search-modal-body">
+          <div id="search-modal-input"></div>
+        </div>
+      </div>
+    </div>
+
+    
+<script src="/js/main.js"></script>
+
+    
+<script src="/js/code-blocks.js"></script>
+
+
+    
+    
+<script src="/js/search.js"></script>
+
+    
+
+    
+    
+<script src="/js/scroll-reveal.js"></script>
+
+    
+
+    
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head prefix="og: https://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  
+  <title>🧭 macOS Claude Code(使用Kimi Api)全流程安装指南 - Veeblue</title>
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  <link rel='manifest' href='/manifest.json'>
+  
+
+  <meta name="description" content="以下操作默认你已具备🪄科学上网的条件以及已经安装了🍺Homebrew  🧩 安装Node.js1brew install node  🧠 安装Claude Code1npm install -g @anthropic-ai&#x2F;claude-code  🔑 申请Kimi API Key🔗 点我直达申请    🔔保存好你的Api Key,页面只会显示一次！  💻 配置kimi api环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🧭 macOS Claude Code(使用Kimi Api)全流程安装指南">
+<meta property="og:url" content="https://blog.veeblue.com/2025/07/19/%F0%9F%A7%AD-macOS-Claude-Code-%E5%9F%BA%E4%BA%8EKIMI-%E5%85%A8%E6%B5%81%E7%A8%8B%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Veeblue">
+<meta property="og:description" content="以下操作默认你已具备🪄科学上网的条件以及已经安装了🍺Homebrew  🧩 安装Node.js1brew install node  🧠 安装Claude Code1npm install -g @anthropic-ai&#x2F;claude-code  🔑 申请Kimi API Key🔗 点我直达申请    🔔保存好你的Api Key,页面只会显示一次！  💻 配置kimi api环">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.45.22.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.45.58.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.38.23.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.51.01.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_19.14.48.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.55.59.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.59.21.png">
+<meta property="og:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_19.03.05.png">
+<meta property="article:published_time" content="2025-07-19T02:48:23.000Z">
+<meta property="article:modified_time" content="2025-07-24T09:14:46.391Z">
+<meta property="article:author" content="Veeblue">
+<meta property="article:tag" content="claude">
+<meta property="article:tag" content="kimi">
+<meta property="article:tag" content="macOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.veeblue.com/images/iShot_2025-07-18_18.45.22.png">
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v13/font/simple-icons.min.css">
+
+  
+  
+  
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  
+
+  
+<link rel="stylesheet" href="/css/var.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/typography.css">
+
+  
+<link rel="stylesheet" href="/css/code-highlighting.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/components/card.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/button.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/badge.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/utilities.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/components/carousel.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/nav.css">
+
+  
+<link rel="stylesheet" href="/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/css/footer.css">
+
+  
+<link rel="stylesheet" href="/css/post-list.css">
+
+  
+  
+<link rel="stylesheet" href="/css/rainbow-banner.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/toc.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/post.css">
+
+  
+  
+  
+  
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+  
+<script src="/pagefind/pagefind-ui.js"></script>
+
+  
+<link rel="stylesheet" href="/css/search.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/scroll-reveal.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/view-transition.css">
+
+  
+  
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  
+<script src="/js/smooth-scroll.js"></script>
+
+  
+
+  
+
+  
+<script src="/js/head.js"></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body
+    data-color-scheme="auto"
+    data-uppercase-categories="true"
+    
+    data-rainbow-banner="true"
+    data-rainbow-banner-shown="auto"
+    data-rainbow-banner-month="6"
+    data-rainbow-banner-colors="#e50000,#ff8d00,#ffee00,#008121,#004cff,#760188"
+    
+    data-config-root="/"
+    
+    data-toc="true"
+    data-toc-max-depth="2"
+    
+    
+    
+    data-scroll-reveal-disappear="false"
+    data-scroll-reveal-query=".scroll-reveal, .post-list-item, .card, .content p img, .content .block-large img"
+    
+    data-nav-blur-gradient="true"
+  >
+    
+<script src="/js/body-top.js"></script>
+
+    <a href="#main-content" id="skip-to-content">Skip to content</a>
+    
+
+<div class="nav-mask">
+  <div order="1"></div>
+  <div order="2"></div>
+  <div order="3"></div>
+  <div order="4"></div>
+  <div order="5"></div>
+  <div order="6"></div>
+</div>
+
+<nav id="theme-nav">
+  <div class="inner">
+    <a class="title" href="/">Blog</a>
+    <div class="nav-arrow"></div>
+    <div class="nav-items">
+      <a class="nav-item nav-item-home" href="/" style="--index: 0">Home</a>
+
+      
+      
+      <a class="nav-item" href="/archives" style="--index: 1">Archives</a>
+      
+      
+      
+      <a class="nav-item" href="/tags" style="--index: 2">Tags</a>
+      
+      
+      
+      <a class="nav-item" href="/categories" style="--index: 3">Categories</a>
+      
+      
+      
+      <a class="nav-item" href="/" style="--index: 4">About</a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://github.com/veeblue" style="--index: 5"><i class="si si-github"></i></a>
+      
+      
+      
+      <a class="nav-item is-icon" target="_blank" rel="noopener" href="https://x.com/_veeblue" style="--index: 6"><i class="si si-x"></i></a>
+      
+      
+      
+      <button class="nav-item is-icon" onclick="openSearchModal()" style="--index: 7"><i class="bi bi-search"></i></button>
+      
+      
+    </div>
+  </div>
+</nav>
+
+    <main id="main-content" data-pagefind-body>
+      
+<article class="post">
+  
+  <div class="cover">
+    <img src="/images/250719_cover.png" alt="" class="cover-img" data-pagefind-meta="image[src], image_alt[alt]" />
+  </div>
+  
+  <div class="meta">
+    
+    <div class="categories text-uppercase">
+    
+      <a href="/categories/Tutorial/">Tutorial</a>
+    
+    </div>
+    
+
+    
+    <time class="date" datetime="2025-07-19T10:48:23+08:00">
+      July 19, 2025
+    </time>
+    
+
+    <h1 class="title" data-pagefind-meta="title">🧭 macOS Claude Code(使用Kimi Api)全流程安装指南</h1>
+  </div>
+
+  <div class="content">
+    <blockquote>
+<p>以下操作默认你已具备🪄<strong>科学上网</strong>的条件以及已经安装了🍺<code>Homebrew</code></p>
+</blockquote>
+<h3 id="🧩-安装Node-js"><a href="#🧩-安装Node-js" class="headerlink" title="🧩 安装Node.js"></a>🧩 安装Node.js</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="🧠-安装Claude-Code"><a href="#🧠-安装Claude-Code" class="headerlink" title="🧠 安装Claude Code"></a>🧠 安装Claude Code</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<h3 id="🔑-申请Kimi-API-Key"><a href="#🔑-申请Kimi-API-Key" class="headerlink" title="🔑 申请Kimi API Key"></a>🔑 申请Kimi API Key</h3><p><a target="_blank" rel="noopener" href="https://platform.moonshot.cn/console">🔗 点我直达申请</a></p>
+<p><img src="/images/iShot_2025-07-18_18.45.22.png" alt="iShot_2025-07-18_18.45.22"></p>
+<p><img src="/images/iShot_2025-07-18_18.45.58.png" alt="iShot_2025-07-18_18.45.58"></p>
+<blockquote>
+<p>🔔保存好你的<code>Api Key</code>,页面只会显示一次！</p>
+</blockquote>
+<h3 id="💻-配置kimi-api环境变量"><a href="#💻-配置kimi-api环境变量" class="headerlink" title="💻 配置kimi api环境变量"></a>💻 配置kimi api环境变量</h3><ul>
+<li><p>打开终端输入：<code>vim ~/.zshrc</code></p>
+</li>
+<li><p>把以下内容追加到<code>.zshrc</code>文件里：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ANTHROPIC_BASE_URL=&quot;https://api.moonshot.cn/anthropic&quot;</span><br><span class="line">export ANTHROPIC_AUTH_TOKEN=&quot;你的Kimi API Key&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/iShot_2025-07-18_18.38.23.png" alt="iShot_2025-07-18_18.38.23"></p>
+<h3 id="⚙️-配置Claude-Code"><a href="#⚙️-配置Claude-Code" class="headerlink" title="⚙️ 配置Claude Code"></a>⚙️ 配置Claude Code</h3><ul>
+<li>打开终端，输入：<code>ll -a</code></li>
+</ul>
+<p><img src="/images/iShot_2025-07-18_18.51.01.png" alt="iShot_2025-07-18_18.51.01"></p>
+<ul>
+<li><p>输入命令：<code>cd .claude</code>进入<code>.claude</code>文件夹中</p>
+<blockquote>
+<p>也可以输入<code>open .claude</code>,窗口化打开<code>.claude</code>目录，然后可视化进行下续操作</p>
+<p><img src="/images/iShot_2025-07-18_19.14.48.png" alt="iShot_2025-07-18_19.14.48"></p>
+</blockquote>
+</li>
+<li><p>创建一个<code>settings.json</code>文件，输入命令：<code>vim settings.json</code>，输入<code>i</code>开启<code>-- INSERT --(插入模式)</code>，编辑好以下内容后粘贴进去，然后按键盘的<code>ESC</code>键，输入<code>:wq</code>保存退出.</p>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;HTTP_PROXY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://127.0.0.1:7897&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;HTTPS_PROXY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://127.0.0.1:7897&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🌍 <code>7897</code>为端口号</p>
+</blockquote>
+<ul>
+<li>端口号修改为你自己代理工具的端口号：</li>
+</ul>
+<p><img src="/images/iShot_2025-07-18_18.55.59.png" alt="iShot_2025-07-18_18.55.59"></p>
+<ul>
+<li>最后把代理切换到<strong>全局</strong>：</li>
+</ul>
+<p><img src="/images/iShot_2025-07-18_18.59.21.png" alt="iShot_2025-07-18_18.59.21"></p>
+<ul>
+<li>终端运行<code>claude</code></li>
+</ul>
+<p><img src="/images/iShot_2025-07-18_19.03.05.png" alt="iShot_2025-07-18_19.03.05"></p>
+<ul>
+<li>可以看到API已经是<strong>月之暗面</strong>(Kimi)的了</li>
+</ul>
+
+  </div>
+
+  
+  <div class="about" data-pagefind-ignore>
+    <h1>About this Post</h1>
+    <div class="details">
+      <p>This post is written by Veeblue, licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
+    </div>
+    
+    <p class="tags">
+      <i class="bi bi-tags icon"></i>
+      
+      <a href="/tags/claude/" class="tag">#claude</a>
+      
+      <a href="/tags/kimi/" class="tag">#kimi</a>
+      
+      <a href="/tags/macOS/" class="tag">#macOS</a>
+      
+    </p>
+    
+    
+  </div>
+  
+
+  <div class="container post-prev-next" data-pagefind-ignore>
+    <a class="next"></a>
+    
+    <a href="/2025/07/07/%E8%AE%B0%EF%BC%9A%E5%BE%AE%E8%B0%83%E4%B8%80%E4%B8%AA%E6%83%85%E7%BB%AA%E5%AF%B9%E8%AF%9D%E6%A8%A1%E5%9E%8B/" class="prev">
+      <div class="text">
+        <p class="label">Previous</p>
+        <h3 class="title">记：微调一个情绪对话模型</h3>
+      </div>
+    </a>
+    
+  </div>
+
+  
+    
+    
+  
+</article>
+
+
+    </main>
+    <footer>
+  <div class="inner">
+    <div class="links">
+      
+      <div class="group">
+        <h2 class="title">Blog</h2>
+        
+        <a href="/" class="item">Home</a>
+        
+        <a href="/archives" class="item">Archives</a>
+        
+        <a href="/tags" class="item">Tags</a>
+        
+        <a href="/categories" class="item">Categories</a>
+        
+        <a href="/search" class="item">Search</a>
+        
+        <a href="/friends" class="item">Friends</a>
+        
+        <a href="/projects" class="item">Projects</a>
+        
+        <a href="/resume" class="item">Resume</a>
+        
+        <a href="/" class="item">About</a>
+        
+        <a href="/atom.xml" class="item">RSS</a>
+        
+      </div>
+      
+      <div class="group">
+        <h2 class="title">Me</h2>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/veeblue" class="item">GitHub</a>
+        
+        <a href="mailto:yee@veeblue.com" class="item">Email</a>
+        
+      </div>
+      
+    </div>
+    <span>&copy; 2025 Veeblue<br>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    
+    
+      <br>
+      <div class="color-scheme-toggle" role="radiogroup" id="theme-color-scheme-toggle">
+        <label>
+          <input type="radio" value="light">
+          <span>Light</span>
+        </label>
+        <label>
+          <input type="radio" value="dark">
+          <span>Dark</span>
+        </label>
+        <label>
+          <input type="radio" value="auto">
+          <span>Auto</span>
+        </label>
+      </div>
+    
+  </div>
+</footer>
+
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal">
+      <div class="search-modal-content">
+        <div class="search-modal-header">
+          <h2>Search</h2>
+          <button id="search-modal-close" class="search-modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="search-modal-body">
+          <div id="search-modal-input"></div>
+        </div>
+      </div>
+    </div>
+
+    
+<script src="/js/main.js"></script>
+
+    
+<script src="/js/code-blocks.js"></script>
+
+
+    
+    
+<script src="/js/search.js"></script>
+
+    
+
+    
+    
+<script src="/js/scroll-reveal.js"></script>
+
+    
+
+    
+
+    
+
+    
+  </body>
+</html>
